@@ -2267,13 +2267,14 @@ int rtw_get_bcn_keys(ADAPTER *Adapter, u8 *pframe, u32 packet_len,
 
 	/* checking SSID */
 	if (elems.ssid) {
-	       if (elems.ssid_len > sizeof(recv_beacon->ssid))
+		if (elems.ssid_len > sizeof(recv_beacon->ssid)) {
 			return _FALSE;
-
-	       _rtw_memcpy(recv_beacon->ssid, elems.ssid, elems.ssid_len);
-	       recv_beacon->ssid_len = elems.ssid_len;
-	} else; // means hidden ssid
-
+		}
+		_rtw_memcpy(recv_beacon->ssid, elems.ssid, elems.ssid_len);
+		recv_beacon->ssid_len = elems.ssid_len;
+	} else {
+		; // means hidden ssid
+	}
 	/* checking RSN first */
 	if (elems.rsn_ie && elems.rsn_ie_len) {
 		recv_beacon->encryp_protocol = ENCRYP_PROTOCOL_WPA2;

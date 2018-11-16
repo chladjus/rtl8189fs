@@ -426,8 +426,9 @@ void rtw_os_recv_indicate_pkt(_adapter *padapter, _pkt *pkt, struct rx_pkt_attri
 		ret = rtw_netif_rx(padapter->pnetdev, pkt);
 		if (ret == NET_RX_SUCCESS)
 			DBG_COUNTER(padapter->rx_logs.os_netif_ok);
-		else
+		else {
 			DBG_COUNTER(padapter->rx_logs.os_netif_err);
+		}
 	}
 }
 
