@@ -914,10 +914,11 @@ phy_PathA_RxIQK8188F(
 
 	if (!(regEAC & BIT28) &&
 		(((regE94 & 0x03FF0000) >> 16) != 0x142) &&
-		(((regE9C & 0x03FF0000) >> 16) != 0x42))
+		(((regE9C & 0x03FF0000) >> 16) != 0x42)) {
 		result |= 0x01;
-	else                            //if Tx not OK, ignore Rx
+	} else {                           //if Tx not OK, ignore Rx
 		return result;
+	}
 
 	u4tmp = 0x80007C00 | (regE94 & 0x3FF0000) | ((regE9C & 0x3FF0000) >> 16);
 	ODM_SetBBReg(pDM_Odm, rTx_IQK, bMaskDWord, u4tmp);
@@ -982,11 +983,11 @@ phy_PathA_RxIQK8188F(
 
 	if (!(regEAC & BIT27) &&     //if Tx is OK, check whether Rx is OK
 		(((regEA4 & 0x03FF0000) >> 16) != 0x132) &&
-		(((regEAC & 0x03FF0000) >> 16) != 0x36))
+		(((regEAC & 0x03FF0000) >> 16) != 0x36)) {
 		result |= 0x02;
-	else
+	} else {
 		ODM_RT_TRACE(pDM_Odm, ODM_COMP_CALIBRATION, ODM_DBG_LOUD, ("Path A Rx IQK fail!!\n"));
-
+	}
 	return result;
 
 
@@ -1070,18 +1071,19 @@ phy_PathB_IQK_8188F(
 
 	if (!(regEAC & BIT28) &&
 		(((regE94 & 0x03FF0000) >> 16) != 0x142) &&
-		(((regE9C & 0x03FF0000) >> 16) != 0x42))
+		(((regE9C & 0x03FF0000) >> 16) != 0x42)) {
 		result |= 0x01;
-	else
+	} else {
 		return result;
+	}
 #if 0
 	if (!(regEAC & BIT30) &&
 		(((regEC4 & 0x03FF0000) >> 16) != 0x132) &&
-		(((regECC & 0x03FF0000) >> 16) != 0x36))
+		(((regECC & 0x03FF0000) >> 16) != 0x36)) {
 		result |= 0x02;
-	else
+	} else {
 		ODM_RT_TRACE(pDM_Odm, ODM_COMP_CALIBRATION, ODM_DBG_LOUD, ("Path B Rx IQK fail!!\n"));
-
+	}
 #endif
 	return result;
 }
@@ -1160,10 +1162,11 @@ phy_PathB_RxIQK8188F(
 
 	if (!(regEAC & BIT31) &&
 		(((regEB4 & 0x03FF0000) >> 16) != 0x142) &&
-		(((regEBC & 0x03FF0000) >> 16) != 0x42))
+		(((regEBC & 0x03FF0000) >> 16) != 0x42)) {
 		result |= 0x01;
-	else                            //if Tx not OK, ignore Rx
+	} else {                           //if Tx not OK, ignore Rx
 		return result;
+	}
 
 	u4tmp = 0x80007C00 | (regEB4 & 0x3FF0000) | ((regEBC & 0x3FF0000) >> 16);
 	ODM_SetBBReg(pDM_Odm, rTx_IQK, bMaskDWord, u4tmp);
@@ -1227,18 +1230,20 @@ phy_PathB_RxIQK8188F(
 #if 0
 	if (!(regEAC & BIT31) &&
 		(((regEB4 & 0x03FF0000) >> 16) != 0x142) &&
-		(((regEBC & 0x03FF0000) >> 16) != 0x42))
+		(((regEBC & 0x03FF0000) >> 16) != 0x42)) {
 		result |= 0x01;
-	else                            //if Tx not OK, ignore Rx
+	} else {                            //if Tx not OK, ignore Rx
 		return result;
+	}
 #endif
 
 	if (!(regEAC & BIT30) &&     //if Tx is OK, check whether Rx is OK
 		(((regEC4 & 0x03FF0000) >> 16) != 0x132) &&
-		(((regECC & 0x03FF0000) >> 16) != 0x36))
+		(((regECC & 0x03FF0000) >> 16) != 0x36)) {
 		result |= 0x02;
-	else
+	} else {
 		ODM_RT_TRACE(pDM_Odm, ODM_COMP_CALIBRATION, ODM_DBG_LOUD, ("Path B Rx IQK fail!!\n"));
+	}
 
 	return result;
 
@@ -2025,14 +2030,16 @@ phy_IQCalibrate_8188F(
 			result[t][2] = (ODM_GetBBReg(pDM_Odm, rRx_Power_Before_IQK_A_2, bMaskDWord) & 0x3FF0000) >> 16;
 			result[t][3] = (ODM_GetBBReg(pDM_Odm, rRx_Power_After_IQK_A_2, bMaskDWord) & 0x3FF0000) >> 16;
 			break;
-		} else
+		} else {
 			ODM_RT_TRACE(pDM_Odm, ODM_COMP_CALIBRATION, ODM_DBG_LOUD, ("Path A Rx IQK Fail!!\n"));
+		}
 	}
 #endif
 
 
-	if (0x00 == PathAOK)
+	if (0x00 == PathAOK) {
 		ODM_RT_TRACE(pDM_Odm, ODM_COMP_CALIBRATION, ODM_DBG_LOUD, ("Path A IQK failed!!\n"));
+	}
 
 	if (is2T) {
 #if !(DM_ODM_SUPPORT_TYPE & ODM_AP)
@@ -2096,8 +2103,9 @@ phy_IQCalibrate_8188F(
 #endif
 
 ////////Allen end /////////
-		if (0x00 == PathBOK)
+		if (0x00 == PathBOK) {
 			ODM_RT_TRACE(pDM_Odm, ODM_COMP_CALIBRATION, ODM_DBG_LOUD, ("Path B IQK failed!!\n"));
+		}
 	}
 
 	//Back to BB mode, load original value
